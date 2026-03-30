@@ -78,6 +78,18 @@ This is the place for you to write reflections:
 
 #### Reflection Publisher-1
 
+**1. Do we still need a trait for Subscriber, or is a single struct enough?**
+
+A single struct is enough. In BambangShop, all subscribers behave the same way. They only have a `url` and `name`, and they all get notified through HTTP POST. There is no need for different subscriber types, so adding a trait would only make the code unnecessarily complex.
+
+**2. Is Vec sufficient, or do we need DashMap to keep `url` unique?**
+
+DashMap is necessary. Vec does not enforce uniqueness, so we would have to manually loop through all items to check for duplicate URLs before inserting, which is inefficient. DashMap uses `url` as the key, so uniqueness is enforced automatically with O(1) lookup speed.
+
+**3. Do we still need DashMap, or can Singleton pattern replace it?**
+
+We still need DashMap. Singleton and DashMap solve different problems. The `lazy_static!` block already handles the Singleton part by ensuring only one instance of `SUBSCRIBERS` exists. But Singleton does not make the data thread-safe. DashMap handles concurrent access safely without needing a manual `Mutex` or `RwLock`, which is important since BambangShop handles multiple requests at the same time.
+
 #### Reflection Publisher-2
 
 #### Reflection Publisher-3
