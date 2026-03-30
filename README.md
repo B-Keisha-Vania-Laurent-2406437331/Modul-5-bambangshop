@@ -92,4 +92,16 @@ We still need DashMap. Singleton and DashMap solve different problems. The `lazy
 
 #### Reflection Publisher-2
 
+**1. Why do we need to separate "Service" and "Repository" from a Model?**
+
+We need to separate them to follow the Single Responsibility Principle. A Model should only represent data. If we put business logic and data access inside the Model, it becomes too large and hard to maintain. Service handles business logic, Repository handles data storage, and Model just holds the data structure. Each layer has one clear job, making the code easier to read, test, and change.
+
+**2. What happens if we only use the Model? How does it affect code complexity for Program, Subscriber, and Notification?**
+
+The code becomes much more complex. Each model would need to handle its own data access and business logic on top of just representing data. For example, `Subscriber` would need to know how to save itself, delete itself, and also handle subscription logic. `Program` and `Notification` would face the same problem. These models would also become tightly coupled to each other, meaning a change in one model could break another. The codebase would be hard to scale and maintain.
+
+**3. Have you explored Postman? How does it help you test your current work?**
+
+Yes. Postman is very helpful for testing HTTP endpoints without needing a frontend. For this project, I can send POST requests to `/notification/subscribe` and `/notification/unsubscribe` directly, check the response body and status code, and verify that the service and repository logic works correctly. For group projects, Postman collections can also be shared among team members so everyone uses the same request setup, which reduces inconsistencies during testing.
+
 #### Reflection Publisher-3
