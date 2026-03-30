@@ -105,3 +105,15 @@ The code becomes much more complex. Each model would need to handle its own data
 Yes. Postman is very helpful for testing HTTP endpoints without needing a frontend. For this project, I can send POST requests to `/notification/subscribe` and `/notification/unsubscribe` directly, check the response body and status code, and verify that the service and repository logic works correctly. For group projects, Postman collections can also be shared among team members so everyone uses the same request setup, which reduces inconsistencies during testing.
 
 #### Reflection Publisher-3
+
+**1. Which variation of Observer Pattern do we use in this tutorial?**
+
+We use the **Push model**. The publisher (BambangShop) actively sends the notification payload directly to each subscriber whenever a product is created, deleted, or promoted. The subscriber does not need to request or pull data from the publisher.
+
+**2. What are the advantages and disadvantages of using the Pull model for this case?**
+
+If we used Pull instead of Push, the advantage is that subscribers have more control, they can decide when to fetch data and only take what they need, which reduces unnecessary data transfer. However, the disadvantage in this case is that subscribers would need to periodically poll the publisher to check for updates, which adds complexity on the subscriber side and introduces latency since subscribers might not get notified immediately. For a real-time notification system like BambangShop, Pull would be less suitable.
+
+**3. What will happen if we decide to not use multi-threading in the notification process?**
+
+Without multi-threading, the publisher would notify each subscriber one by one sequentially. This means the `create`, `delete`, or `publish` request would not return a response until all subscribers have been notified. If there are many subscribers or some subscribers have slow response times, the main app would be blocked and become very slow. With `thread::spawn`, each subscriber is notified in a separate thread so the main process is not blocked and can handle other requests normally.
