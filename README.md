@@ -96,9 +96,9 @@ We still need DashMap. Singleton and DashMap solve different problems. The `lazy
 
 We need to separate them to follow the Single Responsibility Principle. A Model should only represent data. If we put business logic and data access inside the Model, it becomes too large and hard to maintain. Service handles business logic, Repository handles data storage, and Model just holds the data structure. Each layer has one clear job, making the code easier to read, test, and change.
 
-**2. What happens if we only use the Model? How does it affect code complexity for Program, Subscriber, and Notification?**
+**2. What happens if we only use the Model? How does it affect code complexity for Product, Subscriber, and Notification?**
 
-The code becomes much more complex. Each model would need to handle its own data access and business logic on top of just representing data. For example, `Subscriber` would need to know how to save itself, delete itself, and also handle subscription logic. `Program` and `Notification` would face the same problem. These models would also become tightly coupled to each other, meaning a change in one model could break another. The codebase would be hard to scale and maintain.
+The code becomes much more complex. Each model would need to handle its own data access and business logic on top of just representing data. For example, `Subscriber` would need to know how to save itself, delete itself, and also handle subscription logic. `Product` and `Notification` would face the same problem. These models would also become tightly coupled to each other, meaning a change in one model could break another. The codebase would be hard to scale and maintain.
 
 **3. Have you explored Postman? How does it help you test your current work?**
 
